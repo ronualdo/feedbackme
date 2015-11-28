@@ -1,10 +1,10 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath "org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE"
-  }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE"
+    }
 }
 
 apply plugin: 'java'
@@ -12,24 +12,46 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-  baseName = 'feedbackme-service'
-  version = '0.1.0'
+    baseName = 'feedbackme-service'
+    version = '0.1.0'
+}
+
+sourceSets {
+    acceptance {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+idea {
+    module {
+        testSourceDirs += file('src/acceptance/java')
+        scopes.PROVIDED.plus += [ configurations.acceptanceCompile ]
+    }
 }
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  compile 'org.springframework.boot:spring-boot-starter-web'
-  testCompile 'junit:junit'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    testCompile 'junit:junit'
+    acceptanceCompile 'org.springframework.boot:spring-boot-starter-web'
+    acceptanceCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.3'
+    gradleVersion = '2.3'
 }
 
 task stage {
     dependsOn build
 }
+
+task acceptance(type: Test) {
+    testClassesDir = sourceSets.acceptance.output.classesDir
+    classpath = sourceSets.acceptance.runtimeClasspath
+}
+build.dependsOn acceptance
 
