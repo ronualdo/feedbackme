@@ -16,8 +16,10 @@ public class Feedback {
     private long id;
     private String feedbackText;
     private String author;
+    private String userName;
 
-    public Feedback(String feedbackText, String author) {
+    public Feedback(String userName, String feedbackText, String author) {
+        this.userName = userName;
         this.feedbackText = feedbackText;
         this.author = author;
     }

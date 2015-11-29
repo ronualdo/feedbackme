@@ -2,10 +2,7 @@ package raxmac.feedbackme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,16 +18,16 @@ public class FeedbackController {
         this.feedbackRepository = feedbackRepository;
     }
 
-    @RequestMapping(value = "/test_user/feedbacks", method = RequestMethod.POST)
-    public ResponseEntity<Feedback> provideFeedback(@RequestBody Map<String, String> feedback) throws URISyntaxException {
-        Feedback newFeedback = new Feedback(feedback.get("feedbackText"), feedback.get("author"));
+    @RequestMapping(value = "/{userName}/feedbacks", method = RequestMethod.POST)
+    public ResponseEntity<Feedback> provideFeedback(@PathVariable String userName, @RequestBody Map<String, String> feedback) throws URISyntaxException {
+        Feedback newFeedback = new Feedback(userName, feedback.get("feedbackText"), feedback.get("author"));
         feedbackRepository.save(newFeedback);
-        URI locations = createLocation(newFeedback.getId());
+        URI locations = createLocation(userName, newFeedback.getId());
         return ResponseEntity.created(locations).body(newFeedback);
     }
 
-    private URI createLocation(Long id) throws URISyntaxException {
-        String locationValue = String.format("http://localhost:8080/test_user/feedbacks/%d", id);
+    private URI createLocation(String userName, Long id) throws URISyntaxException {
+        String locationValue = String.format("http://localhost:8080/%s/feedbacks/%d", userName, id);
         return new URI(locationValue);
     }
 }

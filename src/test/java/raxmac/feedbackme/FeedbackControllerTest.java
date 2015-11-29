@@ -14,12 +14,14 @@ import static org.mockito.Mockito.*;
 
 public class FeedbackControllerTest {
 
+    private final static String TEST_USER_NAME = "test_user";
+
     @Test
     public void should_store_the_new_feedback_after_creating_it() throws URISyntaxException {
         FeedbackRepository feedbackRepository = mock(FeedbackRepository.class);
         FeedbackController controller = new FeedbackController(feedbackRepository);
 
-        controller.provideFeedback(new HashMap<String, String>());
+        controller.provideFeedback(TEST_USER_NAME, new HashMap<String, String>());
 
         verify(feedbackRepository, atLeast(1)).save(any(Feedback.class));
     }
@@ -30,7 +32,8 @@ public class FeedbackControllerTest {
 
         FeedbackController controller = new FeedbackController(feedbackRepository);
 
-        ResponseEntity<Feedback> feedbackResponseEntity = controller.provideFeedback(new HashMap<>());
+        ResponseEntity<Feedback> feedbackResponseEntity = controller.provideFeedback(TEST_USER_NAME,
+                new HashMap<>());
 
         Feedback providedFeedback = feedbackResponseEntity.getBody();
         HttpHeaders headers = feedbackResponseEntity.getHeaders();
