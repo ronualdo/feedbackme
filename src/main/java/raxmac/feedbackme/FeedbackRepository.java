@@ -1,7 +1,10 @@
 package raxmac.feedbackme;
 
-public class FeedbackRepository {
-    public void add(Feedback feedback) {
+import org.springframework.stereotype.Repository;
 
-    }
+@Repository
+public interface FeedbackRepository extends org.springframework.data.repository.Repository<Feedback, Long> {
+
+    public Feedback save(Feedback feedback);
+
 }

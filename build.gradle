@@ -11,6 +11,9 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 jar {
     baseName = 'feedbackme-service'
     version = '0.1.0'
@@ -18,7 +21,7 @@ jar {
 
 sourceSets {
     acceptance {
-        compileClasspath += sourceSets.main.output
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output
     }
 }
@@ -36,8 +39,10 @@ repositories {
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.postgresql:postgresql:9.4-1206-jdbc42'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'junit:junit'
-    acceptanceCompile 'org.springframework.boot:spring-boot-starter-web'
     acceptanceCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -51,7 +56,7 @@ task stage {
 
 task acceptance(type: Test) {
     testClassesDir = sourceSets.acceptance.output.classesDir
-    classpath = sourceSets.acceptance.runtimeClasspath
+    classpath = sourceSets.acceptance.runtimeClasspath + sourceSets.acceptance.compileClasspath
 }
 build.dependsOn acceptance
 
