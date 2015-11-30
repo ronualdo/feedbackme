@@ -12,6 +12,10 @@ public class ValidationError {
         this.message = message;
     }
 
+    public String getField() { return field; }
+
+    public String getMessage() { return message; }
+
     @Override
     public boolean equals(Object object) {
         boolean result = false;
