@@ -1,5 +1,8 @@
 package raxmac.feedbackme;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties("true")
 public class ValidationError {
     private final String message;
     private final String field;
