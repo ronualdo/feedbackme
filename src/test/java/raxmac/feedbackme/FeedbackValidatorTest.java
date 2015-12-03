@@ -26,7 +26,7 @@ public class FeedbackValidatorTest {
         List<ValidationError> errorsList = feedbackValidator.validate(invalidFeedback);
 
         assertThat(errorsList.size(), is(1));
-        assertThat(errorsList, contains(equalTo(new ValidationError("userName", "may not be null"))));
+        assertThat(errorsList, contains(equalTo(new ValidationError("userName", "may not be empty"))));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class FeedbackValidatorTest {
         List<ValidationError> errorsList = feedbackValidator.validate(invalidFeedback);
 
         assertThat(errorsList.size(), is(1));
-        assertThat(errorsList, contains(equalTo(new ValidationError("feedbackText", "may not be null"))));
+        assertThat(errorsList, contains(equalTo(new ValidationError("feedbackText", "may not be empty"))));
     }
 
     @Test
@@ -46,6 +46,6 @@ public class FeedbackValidatorTest {
         List<ValidationError> errorsList = feedbackValidator.validate(invalidFeedback);
 
         assertThat(errorsList.size(), is(1));
-        assertThat(errorsList, contains(equalTo(new ValidationError("author", "may not be null"))));
+        assertThat(errorsList, contains(equalTo(new ValidationError("author", "may not be empty"))));
     }
 }

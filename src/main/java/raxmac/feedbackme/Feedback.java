@@ -1,6 +1,8 @@
 package raxmac.feedbackme;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,11 @@ public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotNull
+    @NotBlank
     private String feedbackText;
-    @NotNull
+    @NotBlank
     private String author;
-    @NotNull
+    @NotBlank
     private String userName;
 
     public Feedback(String userName, String feedbackText, String author) {
