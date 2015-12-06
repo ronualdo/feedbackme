@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @JsonIgnoreProperties("true")
 @Entity
@@ -18,10 +19,13 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotBlank
+    @Size(max=255)
     private String feedbackText;
     @NotBlank
+    @Size(max=255)
     private String author;
     @NotBlank
+    @Size(max=255)
     private String userName;
 
     public Feedback(String userName, String feedbackText, String author) {
