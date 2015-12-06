@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 @RestController
 public class FeedbackController {
@@ -41,5 +41,10 @@ public class FeedbackController {
     private URI createLocation(String userName, Long id) throws URISyntaxException {
         String locationValue = String.format("http://localhost:8080/%s/feedbacks/%d", userName, id);
         return new URI(locationValue);
+    }
+
+    @RequestMapping(value = "/{userName}/feedbacks", method = RequestMethod.GET)
+    public ResponseEntity<List<Feedback>> retrieveFeedbacks(@PathVariable String userName) {
+        return ResponseEntity.ok(feedbackRepository.findByUserName(userName));
     }
 }
