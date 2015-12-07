@@ -59,5 +59,6 @@ task acceptance(type: Test) {
     testClassesDir = sourceSets.acceptance.output.classesDir
     classpath = sourceSets.acceptance.runtimeClasspath + sourceSets.acceptance.compileClasspath
 }
+acceptance.dependsOn test
 build.dependsOn acceptance
 
